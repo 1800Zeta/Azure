@@ -397,8 +397,8 @@
               "protocol": "*",
               "sourcePortRange": "*",
               "destinationPortRange": "*",
-              "sourceAddressPrefix": "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]",
-              "destinationAddressPrefix": "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))],",
+              "sourceAddressPrefix": "[variables('subnetPrefix')]",
+              "destinationAddressPrefix": "[variables('subnetPrefix')]",
               "access": "Allow",
               "priority": 100,
               "direction": "Inbound"
