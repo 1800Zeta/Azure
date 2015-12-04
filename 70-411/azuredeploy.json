@@ -81,7 +81,7 @@
             "properties": {
               "addressPrefix": "[variables('subnetPrefix')]",
               "networkSecurityGroup": {
-                "id": "Microsoft.Network/networkSecurityGroups/SG-70-411-Internal"
+                "id": "resourceId('Microsoft.Network/networkSecurityGroups/SG-70-411-Internal')"
               }
             }
           }
