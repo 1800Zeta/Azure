@@ -67,7 +67,7 @@
       "name": "[variables('virtualNetworkName')]",
       "location": "[variables('location')]",
       "dependsOn": [
-        "Microsoft.Network/networkSecurityGroupsSG-70-411-Internal"
+        "Microsoft.Network/networkSecurityGroups/SG-70-411-Internal"
       ],
       "properties": {
         "addressSpace": {
@@ -81,7 +81,7 @@
             "properties": {
               "addressPrefix": "[variables('subnetPrefix')]",
               "networkSecurityGroup": {
-                "id": "Microsoft.Network/networkSecurityGroupsSG-70-411-Internal"
+                "id": "Microsoft.Network/networkSecurityGroups/SG-70-411-Internal"
               }
             }
           }
