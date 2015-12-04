@@ -1,0 +1,7 @@
+{
+  "itemDisplayName": "70-411 Training Guide Prerequisites",
+  "description": "This template generates the lab environment as per the base spec from the Microsoft Training guide",
+  "summary": "Create the base environment for 70-411 studies",
+  "githubUsername": "1800Zeta",
+  "dateUpdated": "2015-11-11"
+}
