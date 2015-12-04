@@ -385,6 +385,9 @@
       "type": "Microsoft.Network/networkSecurityGroups",
       "name": "SG-70-411-Internal",
       "location": "[variables('location')]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
+      ],
       "properties": {
         "securityRules": [
           {
