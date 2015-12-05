@@ -23,6 +23,9 @@
   },
   "variables": {
     "addressPrefix": "10.10.10.0/24",
+    "adPDCConfigurationFunction": "CreateADPDC.ps1\\CreateADPDC",
+    "adPDCModulesURL": "https://raw.githubusercontent.com/1800Zeta/Azure/master/70-411/CreateADPDC.ps1.zip",
+    "domainName" :  "Contoso.com",
     "imageOffer": "WindowsServer",
     "imagePublisher": "MicrosoftWindowsServer",
     "location": "North Europe",
@@ -230,7 +233,39 @@
             "enabled": "true",
             "storageUri": "[concat('http://',variables('newStorageAccountName'),'.blob.core.windows.net')]"
           }
+        },
+        "resources": [
+        {
+          "type": "Microsoft.Compute/virtualMachines/extensions",
+          "name": "SYD-DC/CreateADForest",
+          "apiVersion": "2015-05-01-preview",
+          "location": "[variables('location')]",
+          "dependsOn": [
+            "[resourceId('Microsoft.Compute/virtualMachines', 'SYD-DC')]"
+          ],
+          "properties": {
+            "publisher": "Microsoft.Powershell",
+            "type": "DSC",
+            "typeHandlerVersion": "2.8",
+            "settings": {
+              "ModulesUrl": "[variables('adPDCModulesURL')]",
+              "ConfigurationFunction": "[variables('adPDCConfigurationFunction')]",
+              "Properties": {
+                "DomainName": "[variables('domainName')]",
+                "AdminCreds": {
+                  "UserName": "[parameters('adminUserName')]",
+                  "Password": "PrivateSettingsRef:AdminPassword"
+                }
+              }
+            },
+            "protectedSettings": {
+              "Items": {
+                "AdminPassword": "[parameters('adminPassword')]"
+              }
+            }
+          }
         }
+      ]
       },
       "type": "Microsoft.Compute/virtualMachines"
     },
