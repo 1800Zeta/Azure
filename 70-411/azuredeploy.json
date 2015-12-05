@@ -197,14 +197,59 @@
       "location": "[variables('location')]",
       "name": "VM-SYD-DC",
       "properties": {
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": "true",
+            "storageUri": "[concat('http://',variables('newStorageAccountName'),'.blob.core.windows.net')]"
+          }
+        },
         "hardwareProfile": {
           "vmSize": "[variables('vmSize')]"
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces','NIC-SYD-DC')]"
+            }
+          ]
         },
         "osProfile": {
           "computerName": "SYD-DC",
           "adminUsername": "[parameters('adminUsername')]",
           "adminPassword": "[parameters('adminPassword')]"
         },
+        "resources": [
+          {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "SYD-DC/CreateADForest",
+            "apiVersion": "2015-05-01-preview",
+            "location": "[variables('location')]",
+            "dependsOn": [
+              "[resourceId('Microsoft.Compute/virtualMachines', 'SYD-DC')]"
+            ],
+            "properties": {
+              "publisher": "Microsoft.Powershell",
+              "type": "DSC",
+              "typeHandlerVersion": "2.8",
+              "settings": {
+                "ModulesUrl": "[variables('adPDCModulesURL')]",
+                "ConfigurationFunction": "[variables('adPDCConfigurationFunction')]",
+                "Properties": {
+                  "DomainName": "[variables('domainName')]",
+                  "AdminCreds": {
+                    "UserName": "[parameters('adminUserName')]",
+                    "Password": "[parameters('adminPassword')]"
+                  }
+                }
+              },
+              "protectedSettings": {
+                "Items": {
+                  "AdminPassword": "[parameters('adminPassword')]"
+                }
+              }
+            }
+          }
+        ],
         "storageProfile": {
           "imageReference": {
             "publisher": "[variables('imagePublisher')]",
@@ -220,52 +265,7 @@
             "caching": "ReadWrite",
             "createOption": "FromImage"
           }
-        },
-        "networkProfile": {
-          "networkInterfaces": [
-            {
-              "id": "[resourceId('Microsoft.Network/networkInterfaces','NIC-SYD-DC')]"
-            }
-          ]
-        },
-        "diagnosticsProfile": {
-          "bootDiagnostics": {
-            "enabled": "true",
-            "storageUri": "[concat('http://',variables('newStorageAccountName'),'.blob.core.windows.net')]"
-          }
-        },
-        "resources": [
-        {
-          "type": "Microsoft.Compute/virtualMachines/extensions",
-          "name": "SYD-DC/CreateADForest",
-          "apiVersion": "2015-05-01-preview",
-          "location": "[variables('location')]",
-          "dependsOn": [
-            "[resourceId('Microsoft.Compute/virtualMachines', 'SYD-DC')]"
-          ],
-          "properties": {
-            "publisher": "Microsoft.Powershell",
-            "type": "DSC",
-            "typeHandlerVersion": "2.8",
-            "settings": {
-              "ModulesUrl": "[variables('adPDCModulesURL')]",
-              "ConfigurationFunction": "[variables('adPDCConfigurationFunction')]",
-              "Properties": {
-                "DomainName": "[variables('domainName')]",
-                "AdminCreds": {
-                  "UserName": "[parameters('adminUserName')]",
-                  "Password": "PrivateSettingsRef:AdminPassword"
-                }
-              }
-            },
-            "protectedSettings": {
-              "Items": {
-                "AdminPassword": "[parameters('adminPassword')]"
-              }
-            }
-          }
         }
-      ]
       },
       "type": "Microsoft.Compute/virtualMachines"
     },
