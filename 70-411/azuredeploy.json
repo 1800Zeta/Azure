@@ -25,7 +25,7 @@
     "addressPrefix": "10.10.10.0/24",
     "imageOffer": "WindowsServer",
     "imagePublisher": "MicrosoftWindowsServer",
-    "location": "West Europe",
+    "location": "North Europe",
     "newStorageAccountName": "70411storage",
     "publicIPAddressName": "PublicIP-SYD-DC",
     "publicIPAddressType": "Dynamic",
