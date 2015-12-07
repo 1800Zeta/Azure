@@ -255,14 +255,7 @@
           "ConfigurationFunction": "[variables('adPDCConfigurationFunction')]",
           "Properties": {
             "DomainName": "[variables('domainName')]",
-            "AdminCreds": {
-              "UserName": "[parameters('adminUserName')]",
-              "Password": "[parameters('adminPassword')]"
-            }
-          }
-        },
-        "protectedSettings": {
-          "Items": {
+            "AdminCredsUserName": "[parameters('adminUserName')]",
             "AdminPassword": "[parameters('adminPassword')]"
           }
         }
