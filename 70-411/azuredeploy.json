@@ -239,7 +239,7 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "SYD-DC/CreateADForest",
+      "name": "VM-SYD-DC/CreateADForest",
       "apiVersion": "2015-05-01-preview",
       "location": "[variables('location')]",
       "dependsOn": [
